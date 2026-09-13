@@ -1,4 +1,5 @@
 import { createAdminSession, credentialsAreValid } from "@/lib/admin-auth";
+import { safeErrorName } from "@/lib/submission-errors";
 
 export const runtime = "nodejs";
 
@@ -11,7 +12,7 @@ export async function POST(request: Request) {
     await createAdminSession();
     return Response.json({ success: true });
   } catch (error) {
-    console.error("Admin login failed", error);
+    console.error(`[admin] login failed (${safeErrorName(error)})`);
     return Response.json({ success: false, message: "ورود انجام نشد. لطفاً دوباره تلاش کنید." }, { status: 500 });
   }
 }

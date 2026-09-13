@@ -20,7 +20,12 @@ function databasePoolConfig() {
 
 export function getPrisma() {
   if (globalForPrisma.prisma) return globalForPrisma.prisma;
-  const prisma = new PrismaClient({ adapter: new PrismaPg(databasePoolConfig()) });
+  const prisma = new PrismaClient({
+    adapter: new PrismaPg(databasePoolConfig(), {
+      onPoolError: () => console.warn("[database] idle pool connection error"),
+      onConnectionError: () => console.warn("[database] active connection error"),
+    }),
+  });
   globalForPrisma.prisma = prisma;
   return prisma;
 }

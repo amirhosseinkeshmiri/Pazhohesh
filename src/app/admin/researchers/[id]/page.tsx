@@ -4,6 +4,7 @@ import { DetailCard } from "@/components/admin/DetailCard";
 import { verifyAdminSession } from "@/lib/admin-auth";
 import { getPrisma } from "@/lib/prisma";
 import { existingUploadPath } from "@/lib/upload";
+import { prismaErrorCode, safeErrorName } from "@/lib/submission-errors";
 
 const dateFormat = new Intl.DateTimeFormat("fa-IR", { dateStyle: "long", timeStyle: "short" });
 
@@ -12,7 +13,7 @@ export default async function ResearcherDetailPage({ params }: { params: Promise
   const { id } = await params;
   let record;
   try { record = await getPrisma().researcherSubmission.findUnique({ where: { id } }); }
-  catch (error) { console.error("Researcher detail load failed", error); return <DataError />; }
+  catch (error) { console.warn(`[admin] researcher detail database failure (${prismaErrorCode(error) ?? safeErrorName(error)})`); return <DataError />; }
   if (!record) notFound();
   const attachmentPath = await existingUploadPath(record.attachmentPath);
   return <DetailShell><DetailCard title="جزئیات پژوهشگر" items={[["نام و نام خانوادگی", record.fullName], ["شماره تماس", record.phone], ["ایمیل", record.email], ["تحصیلات", record.education], ["دانشگاه / محل فعالیت", record.university], ["حوزه پژوهشی", record.researchField], ["تخصص / زمینه تخصصی", record.specialty], ["عنوان پروژه / راهکار پژوهشی", record.projectTitle], ["تاریخ ثبت", dateFormat.format(record.createdAt)]]} description={["شرح راهکار", record.solutionDescription]} /><FileLink path={attachmentPath} label="مشاهده فایل پیوست" empty={record.attachmentPath ? "فایل بارگذاری‌شده در دسترس نیست." : "فایلی بارگذاری نشده است."} /></DetailShell>;

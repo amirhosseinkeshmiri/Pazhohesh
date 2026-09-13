@@ -6,6 +6,7 @@ import {
   type ExportColumn,
 } from "@/lib/excel-export";
 import { getPrisma } from "@/lib/prisma";
+import { prismaErrorCode, safeErrorName } from "@/lib/submission-errors";
 
 export const runtime = "nodejs";
 
@@ -64,7 +65,7 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error("Researcher Excel export failed", error);
+    console.warn(`[admin] researcher export failed (${prismaErrorCode(error) ?? safeErrorName(error)})`);
     return Response.json(
       { error: "ساخت فایل اکسل با خطا مواجه شد. لطفاً دوباره تلاش کنید." },
       { status: 500 },
