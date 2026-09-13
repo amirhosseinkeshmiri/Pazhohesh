@@ -17,13 +17,15 @@ A Persian RTL application for collecting researcher proposals and company resear
    - `ADMIN_PASSWORD`: strong administrator password
    - `ADMIN_SESSION_SECRET`: cryptographically random value of at least 32 characters
 
-3. Generate the Prisma client:
+3. For a fresh database, create the PostgreSQL database, review `database/migrations/001_initial_schema.sql`, and execute that SQL manually using your chosen database administration method. Database migrations are always manual and must be applied in numeric order.
+
+4. Configure `DATABASE_URL`, then generate the Prisma client:
 
    ```bash
    npx prisma generate
    ```
 
-4. Review and apply database migrations manually. Do not run automatic Prisma migration commands. SQL migrations, when provided, are stored in `database/migrations/` and must be reviewed and executed manually by the database administrator.
+   Do not use automatic Prisma migration, reset, or schema-push commands. SQL migrations are stored in `database/migrations/` and must be reviewed and executed manually by the database administrator.
 
 5. Build and start the application:
 

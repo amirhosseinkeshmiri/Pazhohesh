@@ -1,5 +1,7 @@
 # Manual database migrations
 
-SQL files in this directory are applied manually by the project owner. The application and development workflow must never execute these migrations automatically.
+This directory contains PostgreSQL SQL migrations. Every file must be reviewed and applied manually by the database administrator in numeric order. The application never applies migrations automatically.
 
-Use sequential filenames such as `001_initial_schema.sql`. Review each file and back up the target database before applying it.
+`001_initial_schema.sql` initializes the current application schema in a fresh PostgreSQL 16 database. Review the target database and back it up when applicable before running any migration.
+
+Application deployment must never run Prisma migrate, Prisma reset, or Prisma db push commands against production.

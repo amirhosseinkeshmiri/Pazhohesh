@@ -41,7 +41,9 @@ export async function saveFile(file: File, directory: readonly string[]) {
 }
 
 export async function cleanupFiles(paths: string[]) {
-  await Promise.all(paths.map((filePath) => unlink(filePath).catch(() => undefined)));
+  const results = await Promise.allSettled(paths.map((filePath) => unlink(filePath)));
+  const failures = results.filter((result) => result.status === "rejected").length;
+  if (failures > 0) console.warn(`[upload] cleanup failed for ${failures} file(s)`);
 }
 
 export function safeUploadPath(value: string | null) {

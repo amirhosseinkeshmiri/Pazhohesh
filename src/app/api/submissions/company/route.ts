@@ -1,6 +1,7 @@
 import { getPrisma } from "@/lib/prisma";
 import { cleanupFiles, optionalFile, saveFile, validateFile } from "@/lib/upload";
 import { validateEmail, validateFields, validatePhone } from "@/lib/validation";
+import { databaseErrorCode, safeErrorName } from "@/lib/submission-errors";
 
 export const runtime = "nodejs";
 
@@ -8,6 +9,7 @@ const researchFields = ["هوش مصنوعی", "سلامت", "انرژی‌ها�
 
 export async function POST(request: Request) {
   const writtenFiles: string[] = [];
+  console.info("[company] request received");
   try {
     const form = await request.formData();
     const result = validateFields(form, {
@@ -24,23 +26,32 @@ export async function POST(request: Request) {
     if (!validatePhone(values.phone)) return Response.json({ success: false, message: "لطفاً یک شماره تماس معتبر وارد کنید." }, { status: 400 });
     const completionDate = /^\d{4}-\d{2}-\d{2}$/.test(values.completionDate) ? new Date(`${values.completionDate}T00:00:00.000Z`) : new Date(Number.NaN);
     if (Number.isNaN(completionDate.getTime()) || completionDate.toISOString().slice(0, 10) !== values.completionDate) return Response.json({ success: false, message: "تاریخ تکمیل معتبر نیست." }, { status: 400 });
+    console.info("[company] validation passed");
     const attachment = optionalFile(form, "attachment");
     const completedForm = optionalFile(form, "completedForm");
     for (const [file, allowed] of [[attachment, [".pdf", ".doc", ".docx", ".zip"]], [completedForm, [".pdf", ".doc", ".docx"]]] as const) {
       const error = validateFile(file, allowed); if (error) return Response.json({ success: false, message: error }, { status: file && file.size > 50 * 1024 * 1024 ? 413 : 400 });
     }
     let attachmentPath: string | null = null; let completedFormPath: string | null = null;
-    if (attachment) { const saved = await saveFile(attachment, ["companies", "attachments"]); writtenFiles.push(saved.absolutePath); attachmentPath = saved.publicPath; }
-    if (completedForm) { const saved = await saveFile(completedForm, ["companies", "completed-forms"]); writtenFiles.push(saved.absolutePath); completedFormPath = saved.publicPath; }
+    if (attachment) { const saved = await saveFile(attachment, ["companies", "attachments"]); writtenFiles.push(saved.absolutePath); attachmentPath = saved.publicPath; console.info("[company] attachment saved"); }
+    if (completedForm) { const saved = await saveFile(completedForm, ["companies", "completed-forms"]); writtenFiles.push(saved.absolutePath); completedFormPath = saved.publicPath; console.info("[company] completed form saved"); }
+    console.info("[company] database create start");
     await getPrisma().companySubmission.create({ data: {
       companyName: values.companyName, contactName: values.contactName, position: values.position,
       phone: values.phone, email: values.email.toLowerCase(), completionDate,
       researchNeedTitle: values.researchNeedTitle, researchField: values.researchField,
       problemDescription: values.problemDescription, attachmentPath, completedFormPath,
     } });
+    console.info("[company] database create success");
     return Response.json({ success: true, message: "نیاز پژوهشی شما با موفقیت ثبت شد." });
   } catch (error) {
-    await cleanupFiles(writtenFiles); console.error("Company submission failed", error);
+    await cleanupFiles(writtenFiles);
+    const code = databaseErrorCode(error);
+    if (code) {
+      console.warn(`[company] database unavailable (${code})`);
+      return Response.json({ success: false, message: "در حال حاضر ارتباط با پایگاه داده برقرار نیست. لطفاً کمی بعد دوباره تلاش کنید." }, { status: 503 });
+    }
+    console.error(`[company] submission failed (${safeErrorName(error)})`);
     return Response.json({ success: false, message: "خطایی در ثبت اطلاعات رخ داد. لطفاً دوباره تلاش کنید." }, { status: 500 });
   }
 }

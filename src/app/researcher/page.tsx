@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { submitForm } from "@/lib/client-submission";
 
 const inputClass = "h-12 w-full rounded-lg border border-slate-200 bg-white px-4 text-base text-slate-800 outline-none transition-colors placeholder:text-slate-400 focus:border-[#2878df] focus:ring-3 focus:ring-blue-100";
 
@@ -26,10 +27,8 @@ export default function ResearcherPage() {
     submitLock.current = true;
     const form = event.currentTarget; setSubmitting(true); setMessage(null);
     try {
-      const response = await fetch("/api/submissions/researcher", { method: "POST", body: new FormData(form) });
-      const data = await response.json() as { success?: boolean; message?: string };
-      if (!response.ok || !data.success) throw new Error(data.message || "ثبت اطلاعات انجام نشد.");
-      setMessage({ type: "success", text: data.message || "اطلاعات شما با موفقیت ثبت شد." }); form.reset();
+      const successMessage = await submitForm("/api/submissions/researcher", form);
+      setMessage({ type: "success", text: successMessage || "اطلاعات شما با موفقیت ثبت شد." }); form.reset();
     } catch (error) { setMessage({ type: "error", text: error instanceof Error ? error.message : "خطایی در ثبت اطلاعات رخ داد. لطفاً دوباره تلاش کنید." }); }
     finally { submitLock.current = false; setSubmitting(false); }
   }
