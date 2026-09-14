@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
+import ResearchPitchVideo from "@/components/landing/ResearchPitchVideo";
 
 function Icon({ name, className = "h-7 w-7" }: { name: string; className?: string }) {
   const paths: Record<string, ReactNode> = {
@@ -40,7 +41,7 @@ function RoleCard({ kind, title, description, href, action }: { kind: "researche
 export default function Home() {
   return <main className="landing-shell px-3 py-4 sm:px-6 sm:py-8"><div className="mx-auto w-full min-w-0 max-w-[1040px] overflow-hidden rounded-[22px] bg-white px-5 py-9 shadow-[0_12px_45px_rgba(19,45,75,0.08)] sm:px-10 sm:py-12 lg:px-[72px]">
     <header className="text-center"><h1 className="text-3xl font-black leading-snug text-[#12345e] sm:text-[42px]">حمایت از پژوهش‌های کاربردی</h1><div className="mt-7"><PartnerLogos/></div></header>
-    <video className="mt-9 aspect-video w-full overflow-hidden rounded-2xl bg-[#071d3d] object-cover" controls playsInline preload="metadata" aria-label="ویدیوی معرفی برنامه Research Pitch"><source src="/videos/research-pitch.mp4" type="video/mp4" />مرورگر شما از پخش ویدیو پشتیبانی نمی‌کند.</video>
+    <ResearchPitchVideo />
     <p className="mx-auto mt-9 max-w-3xl text-center text-base leading-8 text-slate-700 sm:text-lg sm:leading-9">برنامه حمایت از پژوهش‌های کاربردی، با هدف شناسایی نیازهای پژوهشی و فناوری<br className="hidden sm:block"/> شرکت‌ها و اتصال آن‌ها به ظرفیت علمی دانشگاه‌ها و پژوهشگران برگزار می‌شود.</p>
     <section className="mt-12" aria-labelledby="roles-title"><h2 id="roles-title" className="section-title">شما در این برنامه چه نقشی دارید؟</h2><div className="mt-7 grid gap-5 md:grid-cols-2"><RoleCard kind="researcher" title="من پژوهشگر هستم" description={<>برای حل مسائل واقعی شرکت‌ها،<br/>راهکار پژوهشی خود را ارائه دهید.</>} href="/researcher" action="ثبت نام پژوهشگر"/><RoleCard kind="company" title="من شرکت هستم" description={<>نیاز پژوهشی یا چالش فناورانه<br/>خود را ثبت کنید.</>} href="/company" action="ثبت نیاز پژوهشی"/></div></section>
     <section className="mt-14" aria-labelledby="benefits-title"><h2 id="benefits-title" className="section-title">چرا در این برنامه شرکت کنیم؟</h2><div className="mt-8 grid grid-cols-2 gap-x-4 gap-y-8 md:grid-cols-4">{benefits.map(([icon, label]) => <div key={label} className="min-w-0 text-center"><div className="mx-auto grid h-14 w-14 place-items-center rounded-full bg-slate-50 text-[#2d6cae]"><Icon name={icon}/></div><p className="mx-auto mt-3 max-w-48 text-sm font-bold leading-7 text-[#244363] sm:text-[15px]">{label}</p></div>)}</div></section>
