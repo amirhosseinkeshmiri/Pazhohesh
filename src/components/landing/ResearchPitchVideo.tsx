@@ -40,21 +40,21 @@ export default function ResearchPitchVideo() {
 
   return (
     <>
-      <section className="hero-tech relative mt-9 flex aspect-video min-h-52 overflow-hidden rounded-2xl px-5 pb-7 text-center text-white sm:min-h-72 sm:pb-9" aria-label="معرفی برنامه Research Pitch">
-        <div className="relative z-10 mt-auto w-full">
-          <button
-            ref={playButtonRef}
-            type="button"
-            aria-label="پخش ویدیو"
-            onClick={() => setIsOpen(true)}
-            className="mx-auto mb-5 grid h-16 w-16 place-items-center rounded-full border border-white/50 bg-white/20 text-white shadow-lg backdrop-blur-sm transition hover:scale-105 hover:bg-white/30 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
-          >
-            <svg aria-hidden="true" viewBox="0 0 24 24" className="mr-1 h-7 w-7 fill-current">
-              <path d="m8 5 11 7-11 7V5Z" />
-            </svg>
-          </button>
-          <p className="text-2xl font-black tracking-[0.12em] sm:text-3xl">RESEARCH PITCH</p>
-          <p className="mt-1 text-sm text-blue-100 sm:text-base">حمایت از پژوهش‌های کاربردی</p>
+      <section className="hero-tech relative mt-9 grid aspect-[16/7] min-h-52 items-center overflow-hidden rounded-2xl px-6 py-7 text-white sm:min-h-64 sm:grid-cols-[auto_1fr] sm:gap-12 sm:px-12 lg:gap-20 lg:px-16" aria-label="معرفی برنامه Research Pitch">
+        <button
+          ref={playButtonRef}
+          type="button"
+          aria-label="پخش ویدیو"
+          onClick={() => setIsOpen(true)}
+          className="relative z-10 grid h-20 w-20 justify-self-start place-items-center rounded-full border border-white/80 bg-white text-[#12345e] shadow-[0_10px_36px_rgba(56,150,255,0.38)] ring-8 ring-white/10 transition hover:scale-[1.04] hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:h-24 sm:w-24"
+        >
+          <svg aria-hidden="true" viewBox="0 0 24 24" className="mr-1 h-8 w-8 fill-current sm:h-10 sm:w-10">
+            <path d="m8 5 11 7-11 7V5Z" />
+          </svg>
+        </button>
+        <div className="relative z-10 mt-6 min-w-0 text-right sm:mt-0 sm:text-center">
+          <p className="text-2xl font-black leading-relaxed sm:text-3xl lg:text-[34px]">حمایت از پژوهش‌های کاربردی</p>
+          <p className="mt-2 text-sm text-blue-100 sm:text-base">مشاهده ویدیوی معرفی برنامه</p>
         </div>
       </section>
 

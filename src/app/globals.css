@@ -39,7 +39,8 @@ h1, h2, h3, p, label, dd { overflow-wrap: break-word; }
 
 .hero-tech {
   background:
-    radial-gradient(circle at 50% 30%, rgba(51, 141, 230, 0.42), transparent 28%),
+    radial-gradient(circle at 88% 45%, rgba(51, 141, 230, 0.48), transparent 25%),
+    radial-gradient(circle at 34% 45%, rgba(35, 104, 173, 0.24), transparent 34%),
     linear-gradient(115deg, rgba(23, 74, 128, 0.35), transparent 42%),
     repeating-linear-gradient(90deg, transparent 0 63px, rgba(118, 189, 255, 0.07) 64px 65px),
     repeating-linear-gradient(0deg, transparent 0 63px, rgba(118, 189, 255, 0.06) 64px 65px),
