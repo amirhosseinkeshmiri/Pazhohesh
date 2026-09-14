@@ -22,7 +22,7 @@ export async function POST(request: Request) {
       researchField: { label: "حوزه پژوهشی", max: 250, allowed: researchFields },
       specialty: { label: "تخصص", max: 250 },
       projectTitle: { label: "عنوان پروژه", max: 300 },
-      solutionDescription: { label: "شرح راهکار", max: 5000 },
+      solutionDescription: { label: "شرح پروژه", max: 5000 },
     });
     if (result.error || !result.values) return Response.json({ success: false, message: result.error }, { status: 400 });
     const values = result.values;

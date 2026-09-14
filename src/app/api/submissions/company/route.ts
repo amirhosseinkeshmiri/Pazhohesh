@@ -28,19 +28,16 @@ export async function POST(request: Request) {
     if (Number.isNaN(completionDate.getTime()) || completionDate.toISOString().slice(0, 10) !== values.completionDate) return Response.json({ success: false, message: "تاریخ تکمیل معتبر نیست." }, { status: 400 });
     console.info("[company] validation passed");
     const attachment = optionalFile(form, "attachment");
-    const completedForm = optionalFile(form, "completedForm");
-    for (const [file, allowed] of [[attachment, [".pdf", ".doc", ".docx", ".zip"]], [completedForm, [".pdf", ".doc", ".docx"]]] as const) {
-      const error = validateFile(file, allowed); if (error) return Response.json({ success: false, message: error }, { status: file && file.size > 50 * 1024 * 1024 ? 413 : 400 });
-    }
-    let attachmentPath: string | null = null; let completedFormPath: string | null = null;
+    const attachmentError = validateFile(attachment, [".pdf", ".doc", ".docx", ".zip"]);
+    if (attachmentError) return Response.json({ success: false, message: attachmentError }, { status: attachment && attachment.size > 50 * 1024 * 1024 ? 413 : 400 });
+    let attachmentPath: string | null = null;
     if (attachment) { const saved = await saveFile(attachment, ["companies", "attachments"]); writtenFiles.push(saved.absolutePath); attachmentPath = saved.publicPath; console.info("[company] attachment saved"); }
-    if (completedForm) { const saved = await saveFile(completedForm, ["companies", "completed-forms"]); writtenFiles.push(saved.absolutePath); completedFormPath = saved.publicPath; console.info("[company] completed form saved"); }
     console.info("[company] database create start");
     await getPrisma().companySubmission.create({ data: {
       companyName: values.companyName, contactName: values.contactName, position: values.position,
       phone: values.phone, email: values.email.toLowerCase(), completionDate,
       researchNeedTitle: values.researchNeedTitle, researchField: values.researchField,
-      problemDescription: values.problemDescription, attachmentPath, completedFormPath,
+      problemDescription: values.problemDescription, attachmentPath,
     } });
     console.info("[company] database create success");
     return Response.json({ success: true, message: "نیاز پژوهشی شما با موفقیت ثبت شد." });

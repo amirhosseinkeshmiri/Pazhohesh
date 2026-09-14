@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useRef, useState } from "react";
 import { submitForm } from "@/lib/client-submission";
 
@@ -38,9 +39,7 @@ export default function CompanyPage() {
             <p className="mx-auto mt-3 max-w-2xl text-sm leading-7 text-slate-600 sm:text-base">اطلاعات موردنیاز را تکمیل کنید تا نیاز پژوهشی یا چالش فناورانه شما بررسی شود.</p>
           </header>
 
-          <div className="hero-tech relative mx-auto mt-7 flex min-h-48 max-w-[700px] overflow-hidden rounded-xl px-7 py-7 text-white sm:min-h-60 sm:px-12">
-            <div className="relative z-10 my-auto text-right"><p className="text-2xl font-black leading-relaxed sm:text-3xl">حمایت از<br />پژوهش‌های کاربردی</p><p className="mt-4 text-sm text-blue-100">Research Pitch</p></div>
-          </div>
+          <Image src="/images/poster.png" alt="پوستر برنامه حمایت از پژوهش‌های کاربردی" width={1672} height={941} sizes="(max-width: 768px) calc(100vw - 64px), 700px" className="mx-auto mt-7 h-auto w-full max-w-[700px] rounded-xl object-contain" />
 
           <form onSubmit={handleSubmit} className="mt-9 w-full min-w-0" aria-label="فرم ثبت نیاز پژوهشی شرکت">
             <section aria-labelledby="company-info-title">
@@ -68,15 +67,6 @@ export default function CompanyPage() {
               <h2 id="attachment-title" className="mb-1 text-sm font-bold text-[#243f60]">بارگذاری فایل پیوست</h2>
               <p className="mb-3 text-xs leading-6 text-slate-500">فایل‌های مرتبط، مستندات فنی، تصاویر، گزارش‌ها و فایل‌های Word/PDF</p>
               <div className="rounded-xl border border-slate-300 bg-white px-4 py-6 text-center sm:px-6"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" className="mx-auto mb-3 h-9 w-9 text-[#0f5594]"><path d="M12 16V4m0 0L7 9m5-5 5 5M5 14v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5" /></svg><p className="mb-3 text-sm font-bold text-[#264867]">فایل خود را انتخاب کنید یا اینجا بکشید</p><input id="attachment" name="attachment" type="file" accept=".pdf,.doc,.docx,.zip" className="mx-auto block max-w-full text-sm text-slate-600 file:ml-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-[#e8f1fb] file:px-4 file:py-2 file:font-bold file:text-[#2468ad] hover:file:bg-[#dceafa]" /><p className="mt-3 text-xs text-slate-500">فرمت‌های مجاز: PDF، Word و ZIP · حداکثر حجم فایل: ۵۰ مگابایت</p></div>
-            </section>
-
-            <section className="mt-6 rounded-xl border border-[#b9cbe0] bg-[#f5f8fc] p-4 sm:p-5" aria-labelledby="word-form-title">
-              <h2 id="word-form-title" className="text-sm font-black leading-7 text-[#254564]">فرم تکمیلی نیاز پژوهشی</h2>
-              <p className="mt-1 text-xs leading-6 text-slate-600">در صورت تمایل، فرم Word را دانلود کرده، تکمیل کنید و فایل تکمیل‌شده را بارگذاری نمایید.</p>
-              <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                <button type="button" disabled title="فایل فرم Word هنوز اضافه نشده است" className="flex h-12 cursor-not-allowed items-center justify-center gap-2 rounded-lg border border-[#7da3ce] bg-white px-4 text-sm font-bold text-[#315f91] opacity-70"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" className="h-5 w-5"><path d="M12 3v12m0 0 5-5m-5 5-5-5M5 21h14" /></svg>دانلود فرم Word</button>
-                <div className="relative flex min-h-12 items-center justify-center rounded-lg border border-[#7da3ce] bg-white px-3"><label htmlFor="completedForm" className="cursor-pointer text-center text-sm font-bold text-[#315f91]">بارگذاری فرم تکمیل‌شده</label><input id="completedForm" name="completedForm" type="file" accept=".doc,.docx,.pdf" className="absolute inset-0 cursor-pointer opacity-0" /></div>
-              </div>
             </section>
 
             <button type="submit" disabled={submitting} className="mt-7 h-13 w-full rounded-lg bg-[#16975f] px-8 text-lg font-black text-white shadow-sm hover:bg-[#128451] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-emerald-600 disabled:cursor-not-allowed disabled:opacity-65">{submitting ? "در حال ثبت..." : "ثبت نیاز پژوهشی"}</button>

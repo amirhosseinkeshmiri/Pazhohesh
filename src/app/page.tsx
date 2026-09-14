@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import type { ReactNode } from "react";
 import ResearchPitchVideo from "@/components/landing/ResearchPitchVideo";
 
@@ -30,7 +31,12 @@ const benefits = [
 const fields = [["ai", "هوش مصنوعی"], ["health", "سلامت"], ["energy", "انرژی‌های تجدیدپذیر"], ["chip", "میکروالکترونیک"], ["ict", "فناوری اطلاعات و ارتباطات"], ["fintech", "فین‌تک"]] as const;
 
 function PartnerLogos() {
-  return <div className="mx-auto flex max-w-2xl items-center justify-center gap-3 sm:gap-7" aria-label="نشان همکاران برنامه">{["پارک علم و فناوری", "دانشگاه", "مرکز نوآوری"].map((label, index) => <div key={label} className="flex h-14 min-w-0 flex-1 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-2 text-center text-[11px] font-bold text-slate-500 sm:h-16 sm:text-sm"><span className={`grid h-8 w-8 shrink-0 place-items-center rounded-full ${index === 1 ? "bg-[#1e9b62]" : "bg-[#173d70]"} text-xs text-white`}>{index + 1}</span><span>{label}</span></div>)}</div>;
+  const partners = [
+    { label: "منطقه بین‌المللی", src: "/images/international.svg", width: 451, height: 358 },
+    { label: "پارک فناوری پردیس", src: "/images/fanavaripark.png", width: 596, height: 682 },
+    { label: "شرکت فرتاک", src: "/images/Fartak.png", width: 1889, height: 1252 },
+  ] as const;
+  return <div dir="rtl" className="mx-auto grid max-w-xl grid-cols-3 items-center gap-3 sm:gap-7" aria-label="نشان همکاران برنامه">{partners.map((partner) => <div key={partner.label} className="flex min-w-0 items-center justify-center"><Image src={partner.src} alt={partner.label} width={partner.width} height={partner.height} sizes="(max-width: 640px) 25vw, 150px" className="h-14 w-auto max-w-full object-contain sm:h-16" /></div>)}</div>;
 }
 
 function RoleCard({ kind, title, description, href, action }: { kind: "researcher" | "company"; title: string; description: ReactNode; href: string; action: string }) {
