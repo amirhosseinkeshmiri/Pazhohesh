@@ -50,8 +50,6 @@ export default function ResearcherPage() {
               <Field id="email" label="ایمیل" type="email" dir="ltr" placeholder="name@example.com" />
               <SelectField id="education" label="تحصیلات" options={["کارشناسی", "کارشناسی ارشد", "دکتری", "پسادکتری", "سایر"]} />
               <Field id="university" label="دانشگاه / محل فعالیت" placeholder="نام دانشگاه یا محل فعالیت" />
-              <SelectField id="researchField" label="حوزه پژوهشی" options={["هوش مصنوعی", "سلامت", "انرژی‌های تجدیدپذیر", "میکروالکترونیک", "فناوری اطلاعات و ارتباطات", "فین‌تک", "سایر"]} />
-              <div className="md:col-span-2 md:max-w-[calc(50%-0.75rem)]"><Field id="specialty" label="تخصص / زمینه تخصصی" placeholder="زمینه تخصصی خود را وارد کنید" /></div>
             </div>
           </section>
 
@@ -59,6 +57,8 @@ export default function ResearcherPage() {
             <SectionHeading id="solution-info-title">اطلاعات پروژه پژوهشی</SectionHeading>
             <div className="space-y-5">
               <Field id="projectTitle" label="عنوان پروژه" placeholder="عنوان پروژه پیشنهادی" />
+              <SelectField id="researchField" label="حوزه پژوهشی" options={["هوش مصنوعی", "سلامت", "انرژی‌های تجدیدپذیر", "میکروالکترونیک", "فناوری اطلاعات و ارتباطات", "فین‌تک", "سایر"]} />
+              <Field id="specialty" label="تخصص / زمینه تخصصی" placeholder="زمینه تخصصی خود را وارد کنید" />
               <div><label htmlFor="solutionDescription" className="mb-2 block text-sm font-bold text-[#243f60]">شرح پروژه<span aria-hidden="true" className="mr-1 text-red-500">*</span></label><textarea id="solutionDescription" name="solutionDescription" required rows={7} placeholder="شرح مختصری از پروژه پژوهشی خود ارائه دهید" className="min-h-44 w-full resize-y rounded-lg border border-slate-200 bg-white px-4 py-3 text-base leading-8 text-slate-800 outline-none transition-colors placeholder:text-slate-400 focus:border-[#2878df] focus:ring-3 focus:ring-blue-100" /></div>
               <div><label htmlFor="attachment" className="mb-2 block text-sm font-bold text-[#243f60]">فایل پیوست</label><div className="rounded-xl border border-dashed border-[#a9bfd7] bg-[#f8fbfe] px-4 py-6 text-center sm:px-6"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" className="mx-auto mb-3 h-10 w-10 text-[#477aa9]"><path d="M12 16V4m0 0L7 9m5-5 5 5M5 14v5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5" /></svg><p className="mb-3 text-sm font-bold text-[#314f6d]">فایل پیشنهادی خود را انتخاب کنید</p><input id="attachment" name="attachment" type="file" accept=".pdf,.doc,.docx,.zip" className="mx-auto block max-w-full text-sm text-slate-600 file:ml-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-[#e8f1fb] file:px-4 file:py-2 file:font-bold file:text-[#2468ad] hover:file:bg-[#dceafa]" /><p className="mt-4 text-xs leading-6 text-slate-500">فرمت‌های مجاز: PDF، Word و ZIP · حداکثر حجم فایل: ۵۰ مگابایت</p></div></div>
             </div>
